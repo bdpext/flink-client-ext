@@ -1,0 +1,7 @@
+dependencies {
+    implementation 'org.jooq:joor-java-8:0.9.14'
+
+    implementation "org.apache.flink:flink-core"
+    implementation "org.apache.flink:flink-runtime"
+    implementation "org.apache.flink:flink-clients_$scalaBinaryVersion"
+}

@@ -1,0 +1,85 @@
+buildscript {
+    ext {
+        flinkVersion = '1.14.0'
+        scalaBinaryVersion = '2.12'
+    }
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+    }
+}
+
+subprojects {
+
+    group = 'org.bdpext.flink.client'
+    version = '0.0.1'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'idea'
+    apply plugin: "io.spring.dependency-management"
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    dependencyManagement {
+        dependencies {
+            dependency "org.apache.flink:flink-core:$flinkVersion"
+            dependency "org.apache.flink:flink-runtime:$flinkVersion"
+            dependency "org.apache.flink:flink-clients_$scalaBinaryVersion:$flinkVersion"
+
+            dependency "org.apache.flink:flink-streaming-java_$scalaBinaryVersion:$flinkVersion"
+            dependency "org.apache.flink:flink-streaming-scala_$scalaBinaryVersion:$flinkVersion"
+
+            dependency "org.apache.flink:flink-java:$flinkVersion"
+            dependency "org.apache.flink:flink-scala_$scalaBinaryVersion:$flinkVersion"
+
+            dependency "org.apache.flink:flink-table-common:$flinkVersion"
+            dependency "org.apache.flink:flink-sql-parser:$flinkVersion"
+            dependency "org.apache.flink:flink-table-api-java:$flinkVersion"
+            dependency "org.apache.flink:flink-table-api-java-bridge_$scalaBinaryVersion:$flinkVersion"
+            dependency "org.apache.flink:flink-table-planner_$scalaBinaryVersion:$flinkVersion"
+            dependency "org.apache.flink:flink-table-planner_$scalaBinaryVersion:$flinkVersion"
+            dependency "org.apache.flink:flink-table-planner-blink_$scalaBinaryVersion:$flinkVersion"
+            dependency "org.apache.flink:flink-table-runtime-blink_$scalaBinaryVersion:$flinkVersion"
+
+            dependency "org.apache.flink:flink-yarn_$scalaBinaryVersion:$flinkVersion"
+            dependency "org.apache.flink:flink-kubernetes_$scalaBinaryVersion:$flinkVersion"
+
+
+        }
+    }
+
+    dependencies {
+        implementation 'io.vavr:vavr:0.10.4'
+
+        compileOnly 'org.projectlombok:lombok:1.18.22'
+        annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+
+    }
+
+    plugins.withType(JavaPlugin) {
+        project.sourceCompatibility = "1.8"
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+}
+
